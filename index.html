@@ -3,65 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drama Mini App</title>
-    <!-- Telegram Web App kutubxonasi -->
+    <title>Cinemax.uz - Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: #ffffff;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #ffffff;
+            --text-secondary: #94a3b8;
         }
-        h2 {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 16px;
+        }
+        .header {
             text-align: center;
-            color: #38bdf8;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 14px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .search-box:focus {
+            border-color: var(--accent-color);
         }
         .project-card {
-            background: #1e293b;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            transition: transform 0.2s;
         }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: #0284c7;
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .project-card:active {
+            transform: scale(0.98);
+        }
+        .project-img {
+            width: 70px;
+            height: 90px;
+            border-radius: 10px;
+            background: #334155;
+            object-fit: cover;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .project-info {
+            margin-left: 14px;
+            flex-grow: 1;
+        }
+        .project-title {
             font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 10px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
         }
-        .btn:hover {
-            background: #0ea5e9;
+        .project-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0 0 8px 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            font-size: 11px;
+            border-radius: 6px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <h2>🎬 Bizning Loyihalar</h2>
+    <div class="header">
+        <h1>🎬 CINEMAX.UZ</h1>
+        <p>Barcha turdagi saralangan loyihalar va seriallar</p>
+    </div>
 
-    <div class="project-card">
-        <h3>Loyihalar: Xitoy qisqa seriallari</h3>
-        <p>Barcha tarjima qilingan qismlar va VIP kontentlar shu yerda.</p>
-        <button class="btn" onclick="openEpisodes()">Ko'rish</button>
+    <input type="text" class="search-box" placeholder="Kino yoki serialni qidirish...">
+
+    <div class="project-card" onclick="alert('Tez kunda ochiladi!')">
+        <div class="project-img">🎞</div>
+        <div class="project-info">
+            <h3 class="project-title">Namuna: Xitoy qisqa seriali</h3>
+            <p class="project-desc">80 qismdan iborat drama va intrigali serial.</p>
+            <span class="badge">VIP / Yangi</span>
+        </div>
     </div>
 
     <script>
-        // Telegram Web App obyektini faollashtirish
         let tg = window.Telegram.WebApp;
         tg.expand(); // Mini App'ni to'liq ekranga ochish
-
-        function openEpisodes() {
-            alert("Tez kunda barcha qismlar yuklanadi!");
-        }
     </script>
 
 </body>
