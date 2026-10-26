@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serial Qismlari</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-color: #38bdf8;
+            --text-color: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 16px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .serial-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .serial-poster {
+            width: 130px;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            margin-bottom: 12px;
+            background: #1e293b;
+        }
+        .serial-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+        }
+        .serial-desc {
+            font-size: 13px;
+            color: var(--accent-color);
+            margin: 0;
+            font-weight: 600;
+        }
+        /* Qismlar tugmalari */
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .episode-btn {
+            background: var(--card-bg);
+            border: 1px solid #1e293b;
+            color: var(--text-color);
+            padding: 14px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }
+        .episode-btn:active {
+            background: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← Orqaga</a>
+
+    <div class="serial-header">
+        <img id="posterImg" src="" alt="Poster" class="serial-poster">
+        <h1 id="serialTitle" class="serial-title">Yuklanmoqda...</h1>
+        <p id="serialDesc" class="serial-desc"></p>
+    </div>
+
+    <!-- Qismlar ro'yxati (Bularni Telegram havolalari bilan to'ldirasiz) -->
+    <div class="episodes-list">
+        <a href="https://t.me/c/SIZNING_KANAL_ID/101" class="episode-btn">
+            <span>1-qism</span>
+            <span style="color: var(--accent-color);">▶ Ko'rish</span>
+        </a>
+        <a href="https://t.me/c/SIZNING_KANAL_ID/102" class="episode-btn">
+            <span>2-qism</span>
+            <span style="color: var(--accent-color);">▶ Ko'rish</span>
+        </a>
+        <a href="https://t.me/c/SIZNING_KANAL_ID/103" class="episode-btn">
+            <span>3-qism</span>
+            <span style="color: var(--accent-color);">▶ Ko'rish</span>
+        </a>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('serialTitle').textContent = params.get('title') || 'Serial';
+        document.getElementById('serialDesc').textContent = params.get('desc') || '';
+        document.getElementById('posterImg').src = params.get('img') || '';
+    </script>
+</body>
+</html>
