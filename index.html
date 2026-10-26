@@ -14,7 +14,7 @@
             --text-secondary: #94a3b8;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -50,15 +50,14 @@
         .search-box:focus {
             border-color: var(--accent-color);
         }
-        
-        /* Bo'limlar (Kategoriyalar) tugmalari */
+        /* Kategoriyalar */
         .categories {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             padding-bottom: 8px;
             margin-bottom: 16px;
-            scrollbar-width: none; /* Scrollbar yashirish */
+            scrollbar-width: none;
         }
         .categories::-webkit-scrollbar {
             display: none;
@@ -80,11 +79,31 @@
             border-color: var(--accent-color);
             font-weight: bold;
         }
-
-        .projects-list {
+       .projects-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            margin-bottom: 8px;
+        }
+        .project-img-real {
+            width: 60px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #334155;
         }
         .project-card {
             background: var(--card-bg);
@@ -142,28 +161,38 @@
         <p>Barcha turdagi tarjima loyihalar</p>
     </div>
 
-    <input type="text" class="search-box" placeholder="Kino, serial yoki animeni qidirish...">
+    <input type="text" id="searchBox" class="search-box" placeholder="Kino, serial yoki animeni qidirish...">
 
-    <!-- Bo'limlar ro'yxati -->
+    <!-- Kategoriyalar tugmalari -->
     <div class="categories">
-        <button class="category-btn active">Barchasi</button>
-        <button class="category-btn">🎭 Drama</button>
-        <button class="category-btn">🍿 Serial</button>
-        <button class="category-btn">⚡ Anime</button>
-        <button class="category-btn">🎬 Film</button>
-        <button class="category-btn">🎨 Multfilm</button>
+        <button class="category-btn active" data-filter="all">Barchasi</button>
+        <button class="category-btn" data-filter="drama">🎭 Drama</button>
+        <button class="category-btn" data-filter="serial">🍿 Serial</button>
+        <button class="category-btn" data-filter="anime">⚡ Anime</button>
+        <button class="category-btn" data-filter="film">🎬 Film</button>
+        <button class="category-btn" data-filter="multfilm">🎨 Multfilm</button>
     </div>
 
     <!-- Loyihalar ro'yxati -->
-    <div class="projects-list">
+    <div class="projects-list" id="projectsList">
         
-        <!-- 1-LOYIHA: Drama -->
-        <a href="https://t.me/c/3926949961/4" class="project-card">
-            <img src="beg'ubor qasoskor.jpg" alt="Beg'ubor Qasoskor" class="project-img-real">
+        <!-- 1-LOYIHA (Drama) -> serial.html ga ma'lumot uzatamiz -->
+        <a href="serial.html?title=Beg%27ubor%20Qasoskor&desc=80%20qism%20|%20O%27zbek%20tilida&img=poster1.jpg" class="project-card" data-category="drama">
+            <img src="poster1.jpg" alt="Beg'ubor Qasoskor" class="project-img-real">
             <div class="project-info">
                 <h3 class="project-title">Beg'ubor Qasoskor</h3>
                 <p class="project-desc">80 qism | O'zbek tilida</p>
-                <span class="badge">Mini Drama / VIP</span>
+                <span class="badge">Drama / VIP</span>
+            </div>
+        </a>
+
+        <!-- 2-LOYIHA (Anime) - Misol uchun -->
+        <a href="serial.html?title=Mushoku%20Tensei&desc=24%20qism%20|%20Anime&img=poster2.jpg" class="project-card" data-category="anime">
+            <img src="poster2.jpg" alt="Mushoku Tensei" class="project-img-real">
+            <div class="project-info">
+                <h3 class="project-title">Mushoku Tensei</h3>
+                <p class="project-desc">24 qism | Anime</p>
+                <span class="badge">Anime</span>
             </div>
         </a>
 
@@ -172,7 +201,44 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Kategoriyalar bo'yicha filter qilish logikasi
+        const buttons = document.querySelectorAll('.category-btn');
+        const cards = document.querySelectorAll('.project-card');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                let filter = button.getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    let category = card.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Qidirish (Search) funksiyasi
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', (e) => {
+            let term = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                let title = card.querySelector('.project-title').textContent.toLowerCase();
+                if (title.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
     </script>
 
 </body>
 </html>
+
